@@ -3,7 +3,6 @@ package drzhark.customspawner.entity;
 import drzhark.customspawner.configuration.CMSConfiguration;
 import drzhark.customspawner.environment.EnvironmentSettings;
 import drzhark.customspawner.type.EntitySpawnType;
-import drzhark.guiapi.widget.WidgetSimplewindow;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.Biome;
@@ -33,8 +32,6 @@ public class EntityData {
     private List<String> spawnBlockBlacklist = new ArrayList<String>();
     private EntitySpawnType entitySpawnType;
     private CMSConfiguration config;
-    @SideOnly(Side.CLIENT)
-    private WidgetSimplewindow entityWindow;
 
     private List<Biome> spawnBiomes = new ArrayList<Biome>();
     private List<String> biomeGroups = new ArrayList<String>();
@@ -223,16 +220,6 @@ public class EntityData {
 
     public boolean getCanSpawn() {
         return this.canSpawn;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public WidgetSimplewindow getEntityWindow() {
-        return this.entityWindow;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void setEntityWindow(WidgetSimplewindow window) {
-        this.entityWindow = window;
     }
 
     public void addBiomeGroupSpawnMap(String biomeGroupName, List<Biome> biomes) {

@@ -3,7 +3,6 @@ package drzhark.customspawner.entity;
 import drzhark.customspawner.CustomSpawner;
 import drzhark.customspawner.configuration.CMSConfiguration;
 import drzhark.customspawner.type.EntitySpawnType;
-import drzhark.guiapi.widget.WidgetSimplewindow;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,7 +18,6 @@ public class EntityModData {
     private Map<EntitySpawnType, Map<String, EntityData>> livingSpawnMap = new HashMap<EntitySpawnType, Map<String, EntityData>>();
 
     private Map<String, MapGenBase> structureMap = new TreeMap<String, MapGenBase>();
-    private Map<EnumCreatureType, WidgetSimplewindow> widgetMap = new HashMap<EnumCreatureType, WidgetSimplewindow>();
     private String tag;
     private String modClassID;
 
@@ -93,21 +91,6 @@ public class EntityModData {
 
     public MapGenBase getStructure(String type) {
         return this.structureMap.get(type);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void setEntityWindow(EnumCreatureType type, WidgetSimplewindow window) {
-        this.widgetMap.put(type, window);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public WidgetSimplewindow getEntityWindow(EnumCreatureType type) {
-        return this.widgetMap.get(type);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public Map<EnumCreatureType, WidgetSimplewindow> getWidgetWindows() {
-        return this.widgetMap;
     }
 
     public String getModKey() {

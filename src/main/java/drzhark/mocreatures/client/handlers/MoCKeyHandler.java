@@ -1,7 +1,5 @@
 package drzhark.mocreatures.client.handlers;
 
-import drzhark.guiapi.GuiModScreen;
-import drzhark.guiapi.ModSettingScreen;
 import drzhark.mocreatures.client.MoCClientProxy;
 import drzhark.mocreatures.entity.IMoCEntity;
 import drzhark.mocreatures.network.MoCMessageHandler;
@@ -18,7 +16,7 @@ import org.lwjgl.input.Mouse;
 public class MoCKeyHandler {
 
     int keyCount;
-    private ModSettingScreen localScreen;
+    //private ModSettingScreen localScreen;
     //static KeyBinding jumpBinding = new KeyBinding("jumpBind", Keyboard.KEY_F);
     //static KeyBinding jumpBinding = new KeyBinding("MoCreatures Jump", MoCClientProxy.mc.gameSettings.keyBindJump.getKeyCode(), "key.categories.movement");
     static KeyBinding diveBinding = new KeyBinding("MoCreatures Dive", Keyboard.KEY_Z, "key.categories.movement");
@@ -32,7 +30,7 @@ public class MoCKeyHandler {
         //net.minecraftforge.fml.client.registry.ClientRegistry.registerKeyBinding(jumpBinding);
         net.minecraftforge.fml.client.registry.ClientRegistry.registerKeyBinding(diveBinding);
         net.minecraftforge.fml.client.registry.ClientRegistry.registerKeyBinding(guiBinding);
-        this.localScreen = MoCClientProxy.instance.MoCScreen;
+        //this.localScreen = MoCClientProxy.instance.MoCScreen;
     }
 
     @SubscribeEvent
@@ -60,11 +58,11 @@ public class MoCKeyHandler {
         //boolean kbDismount = kb.keyDescription.equals("MoCreatures Dismount");
 
         if (kbGui && ep.world.isRemote) {
-            if (MoCClientProxy.mc.inGameHasFocus && (this.localScreen == null)) {
-                GuiModScreen.show(MoCClientProxy.instance.MoCScreen.theWidget);
-            } else {
-                this.localScreen = null; // kill our instance
-            }
+            //if (MoCClientProxy.mc.inGameHasFocus && (this.localScreen == null)) {
+                //GuiModScreen.show(MoCClientProxy.instance.MoCScreen.theWidget);
+            //} else {
+                //this.localScreen = null; // kill our instance
+            //}
         }
 
         /**
