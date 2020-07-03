@@ -86,7 +86,9 @@ public class MoCEntityTameableAquatic extends MoCEntityAquatic implements IMoCTa
 
     @Override
     public boolean getIsTamed() {
-        return this.dataManager.get(TAMED);
+        return false;
+        // Todo: previous datatype wrong?
+        //return this.dataManager.get(TAMED);
     }
     
     @Nullable
