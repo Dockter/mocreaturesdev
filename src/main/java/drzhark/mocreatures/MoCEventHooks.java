@@ -51,6 +51,8 @@ public class MoCEventHooks {
         GameRules gameRule = event.getWorld().getGameRules();
         if (gameRule != null && !MoCreatures.isCustomSpawnerLoaded) {
             gameRule.setOrCreateGameRule("doMobSpawning", "true");
+        } else if (gameRule != null) {
+            gameRule.setOrCreateGameRule("doMobSpawning", "false");
         }
     }
 
