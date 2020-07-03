@@ -26,17 +26,24 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0'
         classpath 'de.matthiasmann.twl:core:1.0.0'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.hierynomus.license'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 version = project.version
 group = "com.almuradev.paydirtwashplant"
 archivesBaseName = project.name.toLowerCase()
 
 defaultTasks 'clean', 'licenseFormat', 'build'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+archivesBaseName = project.name.toLowerCase()
 
 minecraft {
     version = "${project.forgeVersion}"
@@ -46,8 +53,8 @@ minecraft {
     makeObfSourceJar = false
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+deobfMcMCP { failOnAtError = false }
+deobfMcSRG { failOnAtError = false }
 
 repositories {
     mavenCentral()
@@ -93,6 +100,34 @@ license {
     mapping {
         java = 'SLASHSTAR_STYLE'
     }
+}
+
+
+def generatedDir = 'src/main/generated'
+sourceSets {
+    main {
+        java {
+            srcDirs += [generatedDir]
+        }
+    }
+}
+
+shadowJar {
+    mainSpec.sourcePaths.clear()
+    dependsOn reobfJar
+    classifier ''
+    exclude 'dummyThing'
+    relocate 'com.typesafe.config', 'configurate.typesafe.config'
+    dependencies {
+        include dependency('de.matthiasmann.twl:core')                                
+    }
+    afterEvaluate {
+        from zipTree(reobfJar.jar)
+    }
+}
+
+artifacts {
+    //archives shadowJar
 }
 
 processResources {
