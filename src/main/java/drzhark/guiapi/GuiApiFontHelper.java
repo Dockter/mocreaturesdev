@@ -4,10 +4,11 @@ import de.matthiasmann.twl.Color;
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.TextWidget;
 import de.matthiasmann.twl.Widget;
-import de.matthiasmann.twl.renderer.AnimationStateString;
+import de.matthiasmann.twl.renderer.AnimationState;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLFont;
 import drzhark.guiapi.widget.WidgetText;
 
+import java.text.AttributedString;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,14 +34,14 @@ public class GuiApiFontHelper {
     }
 
     private static Map<Widget, GuiApiFontHelper> customFontWidgets;
-    private static Map<FontStates, AnimationStateString> stateTable;
+    private static Map<FontStates, AttributedString> stateTable;
     static {
         GuiApiFontHelper.customFontWidgets = new HashMap<Widget, GuiApiFontHelper>();
         try {
-            GuiApiFontHelper.stateTable = new HashMap<GuiApiFontHelper.FontStates, AnimationStateString>();
+            GuiApiFontHelper.stateTable = new HashMap<GuiApiFontHelper.FontStates, AttributedString>();
             FontStates[] states = FontStates.values();
             for (int i = 0; i < states.length; i++) {
-                GuiApiFontHelper.stateTable.put(states[i], new AnimationStateString(states[i].name()));
+                GuiApiFontHelper.stateTable.put(states[i], new AttributedString(states[i].name()));
             }
         } catch (Throwable e) {
             throw new RuntimeException(e);
@@ -79,73 +80,16 @@ public class GuiApiFontHelper {
     public GuiApiFontHelper() {
         GuiWidgetScreen widgetScreen = GuiWidgetScreen.getInstance();
         LWJGLFont baseFont = (LWJGLFont) widgetScreen.theme.getDefaultFont();
-        this.myFont = baseFont.clone();
+        this.myFont = baseFont;
     }
 
-    /**
-     * @param state The font state you want to check.
-     * @return The Color for this font according to the specified state.
-     */
-    public Color getColor(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getColor();
-    }
-
-    /**
-     * @param state The font state you want to check.
-     * @return The LineThrough for this font according to the specified state.
-     */
-    public boolean getLineThrough(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getLineThrough();
-    }
-
-    /**
-     * @param state The font state you want to check.
-     * @return The OffsetX for this font according to the specified state.
-     */
-    public int getOffsetX(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getOffsetX();
-    }
-
-    /**
-     * @param state The font state you want to check.
-     * @return The OffsetY for this font according to the specified state.
-     */
-    public int getOffsetY(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getOffsetY();
-    }
-
-    /**
-     * @param state The font state you want to check.
-     * @return The Underline for this font according to the specified state.
-     */
-    public boolean getUnderline(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getUnderline();
-    }
-
-    /**
-     * @param state The font state you want to check.
-     * @return The UnderlineOffset for this font according to the specified
-     *         state.
-     */
-    public int getUnderlineOffset(FontStates state) {
-        return this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).getUnderlineOffset();
-    }
-
-    /**
-     * @param state The font state you want to set.
-     * @param col The Color you wish to this fontstate to have for this font.
-     */
-    public void setColor(FontStates state, Color col) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setColor(col);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
 
     /**
      * @param widget The EditField (Or derived class) you wish to set.
      */
     public void setFont(EditField widget) {
         try {
-            setFont(widget.textRenderer);
+            //setFont(widget.textRenderer);
             GuiApiFontHelper.customFontWidgets.put(widget, this);
         } catch (Throwable e) {
             e.printStackTrace();
@@ -173,52 +117,5 @@ public class GuiApiFontHelper {
         GuiApiFontHelper.customFontWidgets.put(widget, this);
     }
 
-    /**
-     * @param state The font state you want to set.
-     * @param val The LineThrough you wish to this fontstate to have for this
-     *        font.
-     */
-    public void setLineThrough(FontStates state, boolean val) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setLineThrough(val);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
-
-    /**
-     * @param state The font state you want to set.
-     * @param i The OffsetX you wish to this fontstate to have for this font.
-     */
-    public void setOffsetX(FontStates state, int i) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setOffsetX(i);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
-
-    /**
-     * @param state The font state you want to set.
-     * @param i The OffsetY you wish to this fontstate to have for this font.
-     */
-    public void setOffsetY(FontStates state, int i) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setOffsetY(i);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
-
-    /**
-     * @param state The font state you want to set.
-     * @param val The Underline you wish to this fontstate to have for this
-     *        font.
-     */
-    public void setUnderline(FontStates state, boolean val) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setUnderline(val);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
-
-    /**
-     * @param state The font state you want to set.
-     * @param i The UnderlineOffset you wish to this fontstate to have for this
-     *        font.
-     */
-    public void setUnderlineOffset(FontStates state, int i) {
-        this.myFont.evalFontState(GuiApiFontHelper.stateTable.get(state)).setUnderlineOffset(i);
-        GuiApiFontHelper.resyncCustomFonts();
-    }
 
 }

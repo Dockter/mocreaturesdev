@@ -188,9 +188,9 @@ public class WidgetItem2DRender extends Widget {
         }
 
         GuiWidgetScreen screen = GuiWidgetScreen.getInstance();
-        screen.renderer.pauseRendering();
+        //screen.renderer.pauseRendering();
 
-        screen.renderer.setClipRect();
+        //screen.renderer.setClipRect();
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_BLEND);
@@ -240,7 +240,7 @@ public class WidgetItem2DRender extends Widget {
 
         GL11.glPopMatrix();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
-        screen.renderer.resumeRendering();
+        //screen.renderer.resumeRendering();
     }
 
     private void setDrawing(Tessellator tesselator, boolean state) {

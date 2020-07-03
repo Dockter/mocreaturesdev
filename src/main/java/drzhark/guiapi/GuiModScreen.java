@@ -2,7 +2,7 @@ package drzhark.guiapi;
 
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
-import de.matthiasmann.twl.renderer.lwjgl.RenderScale;
+//import de.matthiasmann.twl.renderer.lwjgl.RenderScale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
@@ -142,7 +142,7 @@ public class GuiModScreen extends GuiScreen {
         LWJGLRenderer var4 = (LWJGLRenderer) GuiWidgetScreen.getInstance().gui.getRenderer();
         ScaledResolution var5 =
                 new ScaledResolution(GuiWidgetScreen.getInstance().minecraftInstance);
-        RenderScale.scale = var5.getScaleFactor();
+        //RenderScale.scale = var5.getScaleFactor();
         var4.syncViewportSize();
         GuiWidgetScreen.getInstance().gui.update();
     }

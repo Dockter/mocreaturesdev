@@ -86,7 +86,7 @@ license {
     ext.name = project.name
     ext.organization = project.organization
     ext.url = project.url
-    header rootProject.file('HEADER.txt')
+    header rootProject.file('License.txt')
     ignoreFailures true
     strictCheck true
     include '**/*.java'
