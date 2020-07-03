@@ -36,11 +36,9 @@ import java.util.List;
 
 public class EventHooks {
 
-    private boolean enableHook = false;
-
     @SubscribeEvent
     public void peformCustomWorldGenSpawning(PopulateChunkEvent.Populate event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             int par1 = event.getChunkX() * 16;
             int par2 = event.getChunkZ() * 16;
             int x = event.getChunkX() * 16 + 8 + event.getWorld().rand.nextInt(16);
@@ -60,7 +58,7 @@ public class EventHooks {
 
     @SubscribeEvent
     public void onLivingPackSize(LivingPackSizeEvent event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             final World world = event.getEntity().world;
             final EnvironmentSettings environment = CMSUtils.getEnvironment(event.getEntity().world);
             if (!isValidEntity(event.getEntity(), world, environment)) {
@@ -77,7 +75,7 @@ public class EventHooks {
 
     @SubscribeEvent
     public void onLivingSpawn(LivingSpawnEvent.CheckSpawn event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             final World world = event.getEntity().world;
             final EnvironmentSettings environment = CMSUtils.getEnvironment(event.getEntity().world);
             if (!isValidEntity(event.getEntity(), world, environment)) {
@@ -97,7 +95,7 @@ public class EventHooks {
     // used for Despawner
     @SubscribeEvent
     public void onLivingDespawn(LivingSpawnEvent.AllowDespawn event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             final World world = event.getEntity().world;
             final EnvironmentSettings environment = CMSUtils.getEnvironment(event.getEntity().world);
             if (!isValidEntity(event.getEntity(), world, environment)) {
@@ -171,7 +169,7 @@ public class EventHooks {
     // this triggers before serverStarting
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             CMSUtils.addWorldEnvironment(event.getWorld().provider.getClass());
             GameRules gameRule = event.getWorld().getGameRules();
             if (gameRule != null) {
@@ -182,7 +180,7 @@ public class EventHooks {
 
     @SubscribeEvent
     public void structureMapGen(InitMapGenEvent event) {
-        if (enableHook) {
+        if (CustomSpawner.eventListeners) {
             if (event.getType() == EventType.NETHER_BRIDGE) {
                 if (CustomSpawner.environmentMap.get(WorldProviderHell.class) == null) {
                     CMSUtils.addWorldEnvironment(WorldProviderHell.class);

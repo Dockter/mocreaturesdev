@@ -69,6 +69,7 @@ public final class CustomSpawner {
     public static boolean forceDespawns = false;
     public static boolean debug = false;
     public static boolean doMobSpawning = false;
+    public static boolean eventListeners = true;
     public static File ROOT;
     public static CMSLog globalLog;
 
@@ -115,13 +116,8 @@ public final class CustomSpawner {
         MinecraftForge.TERRAIN_GEN_BUS.register(new EventHooks()); // register our event subscriptions
         MinecraftForge.EVENT_BUS.register(new EventHooks());
         debug = CMSGlobalConfig.get(CATEGORY_GLOBAL_SETTINGS, "debug", false, "Turns on global debug logging.").getBoolean(false);
-        doMobSpawning =
-                CMSGlobalConfig
-                        .get(CATEGORY_GLOBAL_SETTINGS,
-                                "doMobSpawning",
-                                false,
-                                "If false, turns off vanilla spawner completely to provide better compatibility with CMS. Note: if you remove CMS, set back to true and load up game at least once so it reenables vanilla spawner. You can also type /gamerule doMobSpawning true")
-                        .getBoolean(false);
+        eventListeners = CMSGlobalConfig.get(CATEGORY_GLOBAL_SETTINGS, "eventListeners", true, "Turns on global Event Listeners.").getBoolean(true);
+        doMobSpawning = CMSGlobalConfig.get(CATEGORY_GLOBAL_SETTINGS,"doMobSpawning",false,"If false, turns off vanilla spawner completely to provide better compatibility with CMS. Note: if you remove CMS, set back to true and load up game at least once so it reenables vanilla spawner. You can also type /gamerule doMobSpawning true").getBoolean(false);
         CMSGlobalConfig.save();
         if (debug) {
             globalLog.logger.info("Initializing CustomSpawner Config File at " + event.getSuggestedConfigurationFile().getParent() + "Global.cfg");
