@@ -1,0 +1,115 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()        
+        maven {
+            name 'Sponge API repo'
+            url 'http://repo.spongepowered.org/maven'
+        }
+        maven {
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven/'
+        }
+        maven {
+            name = 'oss-sonatype-public'
+            url = 'https://oss.sonatype.org/content/repositories/public/'
+        }
+        maven {
+            url = 'https://plugins.gradle.org/m2/'
+        }
+        maven {
+            url = 'http://titania.fs.uni-saarland.de/nexus/content/repositories/stchair/'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0'
+        classpath 'de.matthiasmann.twl:core:1.0.0'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.github.hierynomus.license'
+
+version = project.version
+group = "com.almuradev.paydirtwashplant"
+archivesBaseName = project.name.toLowerCase()
+
+defaultTasks 'clean', 'licenseFormat', 'build'
+
+minecraft {
+    version = "${project.forgeVersion}"
+    runDir = "run"
+    mappings = project.mcpMappings    
+    useDepAts = true
+    makeObfSourceJar = false
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "modmaven.k-4u.nl"
+    }
+    maven {
+            url = 'http://titania.fs.uni-saarland.de/nexus/content/repositories/stchair/'
+    }
+}
+
+dependencies {
+    compile 'de.matthiasmann.twl:core:1.0.0'
+}
+
+compileJava {
+    options.compilerArgs += [
+            '-Xlint:-processing',
+    ]
+    options.deprecation = true
+    options.encoding = 'utf8'
+}
+
+license {
+    ext.name = project.name
+    ext.organization = project.organization
+    ext.url = project.url
+    header rootProject.file('HEADER.txt')
+    ignoreFailures true
+    strictCheck true
+    include '**/*.java'
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+    }
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

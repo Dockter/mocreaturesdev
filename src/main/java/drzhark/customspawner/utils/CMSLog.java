@@ -3,9 +3,8 @@ package drzhark.customspawner.utils;
 import drzhark.customspawner.CustomSpawner;
 import drzhark.customspawner.environment.EnvironmentSettings;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
-import org.apachev1.log4j.FileAppender;
-import org.apachev1.log4j.Logger;
-import org.apachev1.log4j.SimpleLayout;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,9 @@ public class CMSLog {
     public final Logger logger;
 
     public CMSLog(String environment) {
-        this.logger = Logger.getLogger(environment);
+        this.logger = LogManager.getLogger();
+
+        /*
         SimpleLayout layout = new SimpleLayout();
         FileAppender appender = null;
         try {
@@ -24,7 +25,7 @@ public class CMSLog {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.logger.addAppender(appender);
+        this.logger.addAppender(appender); */
         this.logger.info("Logger initialized for environment " + environment);
     }
 
